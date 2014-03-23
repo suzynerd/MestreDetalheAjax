@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Mestre Detalhe</title>
+	<script src="recursos/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript">
+		var httpRequest;
+		function getProdutos(){
+			var cliente = $('input[type="radio"]:checked').val();
+			httpRequest = new XMLHttpRequest();
+			httpRequest.onreadystatechange = clientesFun;
+			httpRequest.open('GET', 'produtos?cliente='+cliente);
+			httpRequest.send(null);
+		}
+		function clientesFun(){
+			if(httpRequest.readyState === 4 && httpRequest.status === 200){
+				
+					var produtos1 = httpRequest.responseText.split("+");
+					var $selectProduto = $("#produto").find("tbody");
+					$selectProduto.empty();
+					 for(var i = 0; i < produtos1.length; i++){
+						 var tr = document.createElement('tr');
+						 $selectProduto.append(tr);	
+						 
+						 var produtos2 = produtos1[i].split(",");
+						 console.log(produtos2.length);
+						 console.log(produtos1[i]);
+						 for(var j = 0; j < produtos2.length; j++){
+							 var td = document.createElement('th');
+							 $(td).text(produtos2[j]);
+							 $(tr).append(td);	 
+						 }						
+					}				
+			}						
+		}
+		  
+	</script>
+</head>
+<body>
+	<br>
+	Página Mestre - Detalhe
+	<br>
+	<hr />
+	CLIENTES 
+	<br>
+    <form id="cliente"  onchange="getProdutos()" >
+    <table border="1" >
+	    <tr>
+	   	  <th>Detalhe</th>
+	      <th>IdPessoa</th>
+	      <th>Nome</th>
+	      <th>CPF</th>
+	      <th>Identidade</th>
+	    </tr>
+	    <tr>
+	      <th><INPUT TYPE="RADIO" NAME="cliente" VALUE="001"></th>
+	      <th>001</th>
+	      <th>Suzyanne</th>
+	      <th>042.132.224-01</th>
+	      <th>013.024.267</th>
+	    </tr>
+	    <tr>
+	      <th><INPUT TYPE="RADIO" NAME="cliente" VALUE="002"></th>
+	      <th>002</th>
+	      <th>Alejandro</th>
+	      <th>094.274.236-02</th>
+	      <th>001.034.268</th>
+	    </tr>
+	    <tr>
+	      <th><INPUT TYPE="RADIO" NAME="cliente" VALUE="003"></th>
+	      <th>003</th>
+	      <th>Joao</th>
+	      <th>096.252.224-03</th>
+	      <th>013.134.267</th>
+	    </tr>
+	    <tr>
+	      <th><INPUT TYPE="RADIO" NAME="cliente" VALUE="004"></th>
+	      <th>004</th>
+	      <th>Maria</th>
+	      <th>097.274.233-04</th>
+	      <th>103.134.264</th>
+	    </tr>
+    </table>
+    
+    <br>    
+	PRODUTOS
+	<br>
+	<table border="1" id="produto">
+		<thead>
+		    <tr>
+		      <th>IdPessoa</th>
+		      <th>Produto</th>
+		      <th>Preço</th>
+		      <th>Quantidade</th>
+		    </tr>
+	    </thead>
+	    
+	    <tbody>
+	    
+	    </tbody>
+    </table>   
+    </form>
+</body>
+</html>
